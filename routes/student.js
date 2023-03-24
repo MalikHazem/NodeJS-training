@@ -32,7 +32,15 @@ app.post('/login', async (req, res) => {
     if (!req.body.id) {
         res.status(400).send("id is Required!");
     } else {
-        studentController.stdUpdate(req, res);
+        studentController.Login(req, res);
+    }
+});
+
+app.get('/search', async (req, res) => {
+    if (!req.query.q) {
+        res.status(400).send("query is Required!");
+    } else {
+        studentController.Search(req, res);
     }
 });
 

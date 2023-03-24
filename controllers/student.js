@@ -69,7 +69,7 @@ const stdUpdate = async (req, res) => {
 
 const Login = async (req, res) => {
     const { id, name } = req.body;
-    const user = await User.findOne({ where: { id, name } });
+    const user = await db.Student.findOne({ where: { id, name } });
     if (user) {
         res.cookie('user_id', user.id);
         // res.redirect('/');
@@ -79,10 +79,23 @@ const Login = async (req, res) => {
     }
 };
 
+const Search = async (req, res) => {
+    const query = req.query.q;
+    const student = await db.Student.findAll({
+        where: {
+            name: {
+                [Op.like]: `%${query}%`
+            }
+        }
+    });
+    res.render('search', { student });
+};
+
 export default {
     create,
     findAll,
     stdDelete,
     stdUpdate,
-    Login
+    Login,
+    Search
 }
