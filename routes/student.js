@@ -28,4 +28,12 @@ router.put('/:id', (req, res) => {
     }
 });
 
+app.post('/login', async (req, res) => {
+    if (!req.body.id) {
+        res.status(400).send("id is Required!");
+    } else {
+        studentController.stdUpdate(req, res);
+    }
+});
+
 export default router;

@@ -65,35 +65,24 @@ const stdUpdate = async (req, res) => {
     ).then(students => {
         res.status(200).send(students);
     });
-    
-    // const id = req.params.id
-    // const students = await db.Student.findOne({
-    //     where: { id: id },
-    // });
-    // try {
-    //     console.log(" First ID IS " + id)
-    //     students.update(
-    //         {
-    //             name: req.body.name,
-    //             gpa: req.body.gpa,
-    //             is_graduated: req.body.is_graduated
-    //         }
-    //         )
-    //     .success(function () {
-    //         res.status(200).send(students);
-    //     })
-    //     .error(function () {
-    //         res.status(500).send('Update student is failed');
-    //     })
-    // } 
-    // catch (error) {
-    //     res.status(500).send("Student not fond");
-    // }
+};
+
+const Login = async (req, res) => {
+    const { id, name } = req.body;
+    const user = await User.findOne({ where: { id, name } });
+    if (user) {
+        res.cookie('user_id', user.id);
+        // res.redirect('/');
+        res.status(200).send(students);
+    } else {
+        res.status(500).send('Invalid id or name');
+    }
 };
 
 export default {
     create,
     findAll,
     stdDelete,
-    stdUpdate
+    stdUpdate,
+    Login
 }
